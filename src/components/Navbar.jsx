@@ -6,7 +6,6 @@ import { auth } from '../firebase-config'
 import { signOut } from 'firebase/auth'
 import LogoutIcon from '@mui/icons-material/Logout';
 import Avatar from '@mui/material/Avatar';
-// import { RiMoonFill, RiSunLine } from "react-icons/ri"
 const Navbar = () => {
   const [user]=useAuthState(auth)
   const navigator=useNavigate()

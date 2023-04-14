@@ -9,7 +9,7 @@ import {getStorage} from 'firebase/storage'
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDig8643LBZJNc7fxg4anJEJINlJ2OvpRI",
+  apiKey:"AIzaSyDig8643LBZJNc7fxg4anJEJINlJ2OvpRI",
   authDomain: "snapgen-9cebd.firebaseapp.com",
   projectId: "snapgen-9cebd",
   storageBucket: "snapgen-9cebd.appspot.com",
@@ -23,4 +23,4 @@ export const auth=getAuth(app)
 export const googleProvider=new GoogleAuthProvider()
 export const db=getFirestore(app)
 export const storage=getStorage(app)
-export const API_TOKEN="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"
+// export const API_TOKEN="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"

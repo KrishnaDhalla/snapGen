@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { API_TOKEN, auth } from "../firebase-config";
+import {  auth } from "../firebase-config";
 import { CircularProgress } from "@mui/material";
 import { useAuthState } from "react-firebase-hooks/auth";
 import DownloadIcon from "@mui/icons-material/Download";
@@ -45,7 +45,7 @@ const Generator = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${API_TOKEN}`,
+          Authorization: `Bearer ${"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"}`,
         },
         body: JSON.stringify({ inputs: input }),
       }
@@ -68,7 +68,7 @@ const Generator = () => {
     link.click();
   };
   return (
-    <div className="max-w-full rounded-tl-20 rounded-tr-40 rounded-bl-20 rounded-br-40 mx-auto px-10 py-10 bg-transparent">
+    <div className="w-screen rounded-tl-20 rounded-tr-40 rounded-bl-20 rounded-br-40 mx-auto px-10 py-10 bg-transparent">
       <div className="flex flex-col items-start md:mx-40 sm:mx-auto mt-8 ">
         <h1 className="font-extrabold text-slate-800 text-3xl">
           Prompt Your Creativity!
@@ -78,19 +78,19 @@ const Generator = () => {
         </p>
       </div>
       <form
-        className="mt-8 flex items-center max-w-screen-xl md:mx-40"
+        className="mt-8 flex items-center -mx-5 md:mx-40 "
         onSubmit={handleSubmit}
       >
         <input
           type="text"
           name="input"
-          className="flex-1 p-3  border border-gray-300 rounded-md focus:outline-slate-800"
+          className="flex-1 p-3   border border-gray-300 rounded-md focus:outline-slate-800 "
           placeholder="Enter your prompt here..."
           onChange={(e)=>setPrompt(e.target.value)}
         />
         <button
           type="submit"
-          className="md:ml-10 ml-4 border-none w-28 bg-slate-800 rounded-md text-white px-5 py-2 cursor-pointer flex items-center justify-center "
+          className="md:ml-10 ml-3  border-none w-28 bg-slate-800 rounded-md text-white md:px-5 py-2 px-3  cursor-pointer flex items-center justify-center "
         >
           {loading ? (
             <CircularProgress size={20} sx={{ color: "white" }} />

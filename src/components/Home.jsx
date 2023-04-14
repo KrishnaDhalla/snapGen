@@ -33,7 +33,7 @@ const Home = () => {
       <div className="mt-10">
         {loading?(
            <div className="flex justify-center items-center">
-           <CircularProgress/>
+           <CircularProgress sx={{ color: "black" }}/>
          </div>
         ):(
           <div className="grid lg:grid-cols-4 sm:grid-cols-3 xs:grid-cols-2 grid-cols-1 md:gap-10 gap-5 md:mx-48 mx-10 mb-10">
