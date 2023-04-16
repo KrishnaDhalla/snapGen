@@ -36,7 +36,7 @@ const Home = () => {
            <CircularProgress sx={{ color: "black" }}/>
          </div>
         ):(
-          <div className="grid lg:grid-cols-4 sm:grid-cols-3 xs:grid-cols-2 grid-cols-1 md:gap-10 gap-5 md:mx-48 mx-10 mb-10">
+          <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 md:gap-10 gap-5 lg:mx-40 mx-10 mb-10">
               {
                 allPost && allPost.map((post)=>{
                   return(

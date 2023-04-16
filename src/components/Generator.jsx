@@ -84,7 +84,7 @@ const Generator = () => {
         <input
           type="text"
           name="input"
-          className="flex-1 p-3   border border-gray-300 rounded-md focus:outline-slate-800 "
+          className="flex-1 p-3 border border-gray-300 rounded-md focus:outline-slate-800 "
           placeholder="Enter your prompt here..."
           onChange={(e)=>setPrompt(e.target.value)}
         />

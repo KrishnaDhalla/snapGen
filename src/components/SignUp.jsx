@@ -1,19 +1,32 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import google from "../Assets/google.svg";
 import { useNavigate } from 'react-router-dom';
 import { createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { auth, googleProvider } from '../firebase-config';
+import { AppContext } from './Context';
 const SignUp = ({selectedTab,setSelectedTab}) => {
     const [registerEmail,setRegisterEmail]=useState("")
     const [registerPassWord,setRegisterPassword]=useState("")
     const [registerCpassword,setRegisterCpassword]=useState("")
     const navigate=useNavigate()
+    const {setAlert} =useContext(AppContext)
     const handleSignUpSubmit=async()=>{
       if(registerPassWord!==registerCpassword){
-        console.warn("password do not match")
+        setAlert({
+          open:true,
+          message:'Password do not Match',
+          type:"error"
+      })
+      return;
       }
       try {
-        await createUserWithEmailAndPassword(auth,registerEmail,registerPassWord)
+        const result=await createUserWithEmailAndPassword(auth,registerEmail,registerPassWord)
+        setAlert({
+          open:true,
+          message:`Sign Up Successful. Welcome ${result.user.email}`,
+          type:'success'
+
+      })
         handleTabChange();
         navigate("/login")
         

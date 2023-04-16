@@ -1,5 +1,4 @@
 import React from "react";
-// import deflogo from "../Assets/plate.png"
 
 const DisplayPost = (props) => {
   const { logo, image, prompt, user } = props.post;
@@ -19,7 +18,7 @@ const DisplayPost = (props) => {
             </div>
             <div>
               <span style={{color: "#888",fontSize: "12px", textTransform: "lowercase"}}>{user}</span>
-              <p className="text-xs">{prompt}</p>
+              <p className="text-xs">{prompt.length>200? prompt.slice(0,200)+ '....': prompt}</p>
             </div>
           </div>
       </div>
