@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {signInWithEmailAndPassword} from 'firebase/auth'
 import { auth} from "../firebase-config";
 import { useNavigate } from "react-router-dom";
 import SignUp from "./SignUp";
+import { AppContext } from "../Context";
 
 const Login = () => {
+  const {showSnackbar,user}=useContext(AppContext)
   const [selectedTab, setSelectedTab] = useState(false);
   const[email,setEmail]=useState("")
   const[password,setPassword]=useState("")
@@ -13,11 +15,16 @@ const Login = () => {
     setSelectedTab(!selectedTab)
   }
   const handleLoginSubmit=async()=>{
+    if(!email|| !password){
+      showSnackbar('Please Fill All The Fields','error')
+      return;
+    }
     try{
       await signInWithEmailAndPassword(auth,email,password)
+      showSnackbar(`Logged In !!. Welcome ${user.email}`,'success')
       navigate("/")
     }catch(error){
-      console.warn(error)
+      showSnackbar(error.message,'error')
     }
     console.log(auth.currentUser.email)
   }

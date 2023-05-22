@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {  auth } from "../firebase-config";
 import { CircularProgress } from "@mui/material";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -8,6 +8,7 @@ import { collection,addDoc } from "firebase/firestore";
 import { db,storage } from "../firebase-config";
 import { getDownloadURL,ref,uploadBytes } from "firebase/storage";
 import {v4} from "uuid"
+import { AppContext } from "../Context";
 const Generator = () => {
   const [loading, setLoading] = useState(false);
   const [output, setOutput] = useState(null);
@@ -15,25 +16,30 @@ const Generator = () => {
   const[prompt,setPrompt]=useState(null)
   const[imageFile,setImageFile]=useState(null)
   const postRef=collection(db,"post")
+  const {showSnackbar}=useContext(AppContext)
 
   const uploadImage=async()=>{
       if(imageFile!==null && prompt!==null){
-        const imageRef=ref(storage,`images/${imageFile.name+v4()}`)
-        uploadBytes(imageRef,imageFile)
-        .then(()=>{
-          getDownloadURL(imageRef)
-          .then((url)=>{
-            addDoc(postRef,{
-              prompt:prompt,
-              image:url,
-              logo:user.photoURL,
-              user:user.displayName
+        try {
+          const imageRef=ref(storage,`images/${imageFile.name+v4()}`)
+          uploadBytes(imageRef,imageFile)
+          .then(()=>{
+            getDownloadURL(imageRef)
+            .then((url)=>{
+              addDoc(postRef,{
+                prompt:prompt,
+                image:url,
+                logo:user.photoURL,
+                user:user.displayName,
+              })
             })
           })
-        })
-        .catch((error)=>console.log(error))
-      }
+          showSnackbar("Image added successfully!!",'success')
+        } catch (error) {
+          showSnackbar(error.message,'error')
+        }
   }
+}
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
@@ -52,7 +58,7 @@ const Generator = () => {
     );
 
     if (!response.ok) {
-      throw new Error("Failed to generate image");
+      showSnackbar("Failed to generate image! Please reload the page and try again",'error')
     }
 
     const blob = await response.blob();

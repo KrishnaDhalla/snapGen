@@ -1,29 +1,40 @@
-import { collection, getDocs } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { db } from "../firebase-config";
 import { CircularProgress } from "@mui/material";
+// import CloseIcon from '@mui/icons-material/Close';
 import DisplayPost from "./DisplayPost";
 const Home = () => {
   const[allPost,setAllPost]=useState([])
   const [loading, setLoading] = useState(true);
   const postRef=collection(db,"post")
-  useEffect(()=>{
-    const getPosts=async()=>{
-      try {
-        const data=await getDocs(postRef)
-        const filteredData=data.docs.map((doc)=>({
-          ...doc.data(),
-          id:doc.id,
-        }))
-        setAllPost(filteredData)
-        setLoading(false)
-        // console.log(data)
-      } catch (error) {
-        console.log(error)
-      }
+  const getPosts=async()=>{
+    try {
+      const data=await getDocs(postRef)
+      const filteredData=data.docs.map((doc)=>({
+        ...doc.data(),
+        id:doc.id,
+      }))
+      setAllPost(filteredData)
+      setLoading(false)
+       console.log(filteredData)
+    } catch (error) {
+      console.log(error)
     }
+  }
+  useEffect(()=>{
     getPosts()
   },[])
+  // const handleDelete= async(id)=>{
+  //     try {
+  //       await deleteDoc(doc(db,"post",id))
+  //       setAllPost(allPost.filter(p=>p.id!==id))
+  //       // getPosts()
+  //       // alert("data deleted")
+  //     } catch (error) {
+        
+  //     }
+  // }
   return (
     <section className="w-full mx-auto mt-14">
       <div className="flex flex-col items-center md:mx-40 mx-10 mt-8">
@@ -40,7 +51,15 @@ const Home = () => {
               {
                 allPost && allPost.map((post)=>{
                   return(
-                    <DisplayPost post={post}/>
+                    <DisplayPost  key={post.id}
+                    logo={post.logo}
+                    image={post.image}
+                    prompt={post.prompt}
+                    user={post.user}
+                    id={post.id}
+                    allPost={allPost}
+                    setAllPost={setAllPost}
+                    postRef={postRef}/>
                   )
                 })
               }

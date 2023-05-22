@@ -9,13 +9,14 @@ import {getStorage} from 'firebase/storage'
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey:"AIzaSyDig8643LBZJNc7fxg4anJEJINlJ2OvpRI",
+  apiKey: "AIzaSyDig8643LBZJNc7fxg4anJEJINlJ2OvpRI",
   authDomain: "snapgen-9cebd.firebaseapp.com",
   projectId: "snapgen-9cebd",
   storageBucket: "snapgen-9cebd.appspot.com",
   messagingSenderId: "510331877573",
   appId: "1:510331877573:web:ed2e0dc1f5b078c04698ac"
 };
+
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);

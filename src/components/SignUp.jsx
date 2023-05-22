@@ -3,40 +3,33 @@ import google from "../Assets/google.svg";
 import { useNavigate } from 'react-router-dom';
 import { createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { auth, googleProvider } from '../firebase-config';
-import { AppContext } from './Context';
+import { AppContext } from '../Context';
+import { useAuthState } from 'react-firebase-hooks/auth';
 const SignUp = ({selectedTab,setSelectedTab}) => {
     const [registerEmail,setRegisterEmail]=useState("")
     const [registerPassWord,setRegisterPassword]=useState("")
     const [registerCpassword,setRegisterCpassword]=useState("")
     const navigate=useNavigate()
-    const {setAlert} =useContext(AppContext)
+    const { showSnackbar } = useContext(AppContext);
     const handleSignUpSubmit=async()=>{
       if(registerPassWord!==registerCpassword){
-        setAlert({
-          open:true,
-          message:'Password do not Match',
-          type:"error"
-      })
+        showSnackbar('Password do not Match', 'error');
       return;
       }
       try {
-        const result=await createUserWithEmailAndPassword(auth,registerEmail,registerPassWord)
-        setAlert({
-          open:true,
-          message:`Sign Up Successful. Welcome ${result.user.email}`,
-          type:'success'
-
-      })
+        await createUserWithEmailAndPassword(auth,registerEmail,registerPassWord)
+         showSnackbar(`Sign Up Successful. Welcome ${auth.currentUser.email}`, 'success');
         handleTabChange();
         navigate("/login")
         
       } catch (error) {
-        console.warn(error)
+        showSnackbar(error.message, 'error');
       }
     }
     const signInWithGoogle=async()=>{
       try{
         await signInWithPopup(auth,googleProvider)
+        showSnackbar(`Sign Up Successful. Welcome ${auth.currentUser.displayName}`, 'success');
         navigate("/")
       }catch(error){
         console.log(error)
